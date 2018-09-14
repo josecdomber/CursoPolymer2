@@ -1,0 +1,19 @@
+{
+  "name": "clase2",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-collapse": "PolymerElements/iron-collapse#^2.2.1",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.1.3"
+  }
+}

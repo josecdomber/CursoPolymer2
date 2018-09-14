@@ -1,0 +1,76 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="encuesta-timer">
+  <template>
+    <style>
+      :host {
+        display: block;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode'
+      }
+
+      div {
+        font-size: .8em;
+        display: inline-block;
+        background-color: orangered;
+        padding: 10px;
+        margin: 5px;
+        color: white;
+      }
+
+    </style>
+    
+
+    <div> El tiempo para la respuesta es de: [[segundos]]</div>
+
+  </template>
+
+  <script>
+    
+    class EncuestaTimer extends Polymer.Element {
+      static get is() { return 'encuesta-timer'; }
+
+      static get properties() {
+        return {
+            segundos: {
+              type: Number,
+              value: 60,
+              readOnly: true
+            },
+            temporizador: Object
+        };
+      }
+
+      reset() {
+        this._setSegundos(60);
+        this.cuentaAtras();
+      }
+
+      ready() {
+        super.ready();
+        this.cuentaAtras();
+      }
+
+            // Si alguien elimina del ShadowDOM este componente encuesta-pregunta, me tengo que preocupar de parar o eliminar la cuenta atrás. Para ello utilizo el método disconnectedCallback, que se ejecuta cuando el elemento sale del DOM
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        clearTimeout(this.temporizador);
+      }
+
+      cuentaAtras() {
+        this._setSegundos(this.segundos - 1);
+        if (this.segundos == 0) {
+  // Tengo que parar el contador y lo tengo que hacer con un CustomEvent que avise al padre
+          this.dispatchEvent(new CustomEvent('tiempo-finalizado'));
+        } else {
+          // Guardo una referencia del setTimeout sólo para poder eliminarla más tarde
+           this.temporizador = setTimeout(() => {
+              this.cuentaAtras();
+           }, 1000);
+        }
+      }
+  
+    }
+
+    window.customElements.define(EncuestaTimer.is, EncuestaTimer);
+  </script>
+</dom-module>

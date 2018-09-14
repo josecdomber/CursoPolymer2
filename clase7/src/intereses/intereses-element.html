@@ -1,0 +1,100 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="./intereses-item.html">
+
+<dom-module id="intereses-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <template is="dom-if" if="[[!maximoIntereses]]">
+        Informar interés y pulsa enter: <input  type="text" value="{{interes::input}}" on-keypress="_detectarEnter">
+    </template>
+    <template is="dom-if" if="[[maximoIntereses]]">
+        Has llegado al máximo de intereses, borra alguno para poder añadir más.
+    </template>
+        
+    <template is="dom-repeat" items="[[intereses]]" as="interesItem">
+        <intereses-item interes="[[interesItem]]" id="[[index]]" on-borrar="borrarInteres"></intereses-item>     
+    </template>
+
+    <button on-click="cambiarCasilla">Cambiar el 1er. interés</button>
+ 
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class InteresesElement extends Polymer.Element {
+      static get is() { return 'intereses-element'; }
+      static get properties() {
+        return {
+          intereses: {
+            type: Array,
+            value: function() {return [];}
+          },
+          interes: {
+            type: String,
+            value: ''
+          },
+          maximoIntereses: {
+            type: Boolean,
+            value: false
+          }
+        };
+      }
+
+      _detectarEnter(e) {
+        console.log('tecla: ' , e.charCode);
+        if (e.charCode == 13 && !this.maximoIntereses) {
+          this.push('intereses', this.interes);
+          this.interes='';
+        } 
+      }
+
+      static get observers() {
+        return [
+          '_interesesChanged(intereses.splices)',
+          '_interesesCasillasChanged(intereses.*)'
+        ]
+      }
+
+      _interesesChanged(splices) {
+        // Si nno existe el array (objeto splices) no tiene sentido hacer nada
+        if (!splices) {return;};
+
+        console.log('Los splice: ', splices);
+        if(splices.indexSplices[0].object.length >= 3) {
+          this.maximoIntereses = true;
+        } else {
+          this.maximoIntereses = false;
+        }
+      }
+
+      _interesesCasillasChanged(changeRecord) {
+          console.log('changeRecord en una casilla:', changeRecord);
+      }
+
+      borrarInteres(e) {
+        console.log("Borrar id.: ", e.detail.id);
+        // "splice" es el método que aporta Polymer para aplicar sobre el objeto this y pasar como parámetros, el array a trabajar, la posisicón desde la que se quiere borrar y cuantos elementos del array se quieren borrar, si no pones número de elementos a borrar, te borra todos a partir del que tehas posicionado
+        this.splice('intereses', e.detail.id, 1);
+      }
+
+      cambiarCasilla() {
+        if (this.intereses.length > 0) {
+          this.set('intereses.0', 'nuevo valor set');
+        }
+      }
+
+    }
+
+    window.customElements.define(InteresesElement.is, InteresesElement);
+  </script>
+</dom-module>

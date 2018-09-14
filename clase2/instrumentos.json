@@ -1,0 +1,32 @@
+[
+	            {
+                  "nombre": "Guitarra",
+                  "clasificacion": "cuerda",
+                  "descripcion": "Caja con seis cuerdas tensadas"
+                },
+                {
+                  "nombre": "Tambor",
+                  "clasificacion": "percusión",
+                  "descripcion": "Cajón con una tela tensada"
+                },                
+                {
+                  "nombre": "Piano",
+                  "clasificacion": "cuerda",
+                  "descripcion": "Caja de resonancia con cuerdas atadas a teclas"
+                },
+	            {
+                  "nombre": "Faluta",
+                  "clasificacion": "viento",
+                  "descripcion": "Tubo con varios agujeros"
+                },
+                {
+                  "nombre": "Xilófono",
+                  "clasificacion": "percusión",
+                  "descripcion": "Placas metálicas alineadas"
+                },                
+                {
+                  "nombre": "Xaxofón",
+                  "clasificacion": "viento",
+                  "descripcion": "Trompeta gigante"
+                }
+]

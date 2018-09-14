@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./input-bindeable.html">
+<!-- Incluimos el mixin -->
+<link rel="import" href="../util/event-mixin.html">
+
+<dom-module id="input-bindeable-enter">
+ 
+<!-- Hay que eliminar el template de este componente ya que si no sobrescribe el del padre -->
+
+ <!--  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+  </template> -->
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    // Si no se utiza el mixin:
+ // class InputBindeableEnter extends extends InputBindeable {
+    class InputBindeableEnter extends EventMixin(InputBindeable) {
+      static get is() { return 'input-bindeable-enter'; }
+      static get properties() {
+        return {  };
+      }
+
+      ready() {
+        super.ready();
+        this.addEventListener('keypress', (e) => {
+          if (e.charCode == 13) {
+
+//  Al utilizar el mixin, no necesito este código:
+            // this.dispatchEvent(new CustomEvent('enter-pulsado', {
+            //   detail: {
+            //     value: this.value
+            //   }
+            // }));
+            this.fire('enter-pulsado', {value: this.value})
+
+          }
+        })
+      }
+    }
+
+    window.customElements.define(InputBindeableEnter.is, InputBindeableEnter);
+  </script>
+</dom-module>

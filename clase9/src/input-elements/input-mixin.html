@@ -1,0 +1,26 @@
+<script>
+	// Lo primero que hago es reclamar para mi un espacio global.
+	// asigno window.PolyJCDB a el mismo si ya existe, sino creo ese espacio como un objeto vacío
+	// Ahora en todos los sitios desde donde se utilizaba este mixin "InputMixin" debo anteponerle el nombre de la variable global "	PolyJCDB.InputMixin"
+	window.PolyJCDB = window.PolyJCDB || {};
+
+	PolyJCDB.InputMixin = Polymer.dedupingMixin((superclass) => {
+		return class extends superclass {
+			static get properties() {
+				return {
+		          label: {
+		            type: String,
+		            value:''
+		          },
+		          value: {
+		            type: String,
+		            value: '',
+		          notify: true
+		          } 					
+				};
+			}
+		}
+
+	});
+
+</script>

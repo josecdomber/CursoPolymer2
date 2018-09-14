@@ -1,0 +1,92 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../input-bindeable/input-bindeable.html">
+<link rel="import" href="../input-password/password-element.html">
+<link rel="import" href="../intereses/intereses-element.html">
+
+<dom-module id="registro-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode'
+      }
+      h1 {
+        font-size: 1.2em;
+      }
+      span {
+        display: inline-block;
+        width: 100px;
+      }
+      .nota {
+        font-size: .8em;
+      }
+      .nota h2 {
+        font-size: 1.1em;
+      }
+      .nota p {
+        margin: 0 0 5px 0;
+      }
+
+    </style>
+
+    <input-bindeable label="Nombre: " value="{{user.nombre}}"></input-bindeable>
+    <input-bindeable label="Email.: " value="{{user.email}}"></input-bindeable>
+
+    <password-element></password-element>
+
+    <intereses-element></intereses-element>
+
+    <div class="nota">
+      <h2>Mostrando el dato del formulario</h2> 
+      <p>
+        <span>Nombre: </span>[[user.nombre]]
+      </p>
+      <p>
+        <span>Email:  </span>[[user.email]]
+      </p>
+      
+    </div>
+    
+   </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class RegistroForm extends Polymer.Element {
+      static get is() { return 'registro-form'; }
+      static get properties() {
+        return {
+          user: {
+            type: Object,
+            value: function() {
+              return {
+                nombre: '',
+                password: '',
+                email: ''
+              }
+            }
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_nombreChanged(user.nombre)',
+          '_userChanged(user.*)'
+        ];
+      }
+
+      _nombreChanged(nombre) {
+          console.log('El nuevo valor del nombre es:' , nombre);
+      }
+
+      _userChanged(changeRecord) {
+        console.log('Cambios: ', changeRecord);
+      }
+     }
+
+    window.customElements.define(RegistroForm.is, RegistroForm);
+  </script>
+</dom-module>

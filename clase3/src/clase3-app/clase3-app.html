@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../sandbox/componente-basico.html">
+<link rel="import" href="../encuesta/encuesta-pregunta.html">
+
+<dom-module id="clase3-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+<!--     <h2>Hello [[prop1]]!</h2>
+    <componente-basico id="basico"></componente-basico>
+    <button on-click="manipular">Manipular propiedad</button> -->
+
+   <encuesta-pregunta
+    pregunta="¿Te gusta el curso de Polymer 2?"
+    segundos=500
+    ></encuesta-pregunta>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Clase3App extends Polymer.Element {
+      static get is() { return 'clase3-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'clase3-app'
+          }
+        };
+      }
+
+      manipular() {
+ //       this.$.basico.prop = "Esto es lo que quiero que aparezca";
+          this.$.basico.cambiarProp('hola');
+      }
+    }
+
+    window.customElements.define(Clase3App.is, Clase3App);
+  </script>
+</dom-module>

@@ -1,0 +1,67 @@
+<link rel="import"  href="../bower_components/polymer/polymer-element.html">
+<link rel="import"  href="../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import"  href="../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import"  href="./instrumento-musical.html">
+
+<dom-module id="listado-instrumentos-ajax">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+  
+    </style>
+
+    <iron-ajax
+      id="ajax"
+      url="http://localhost/Polymer/clase2/instrumentos.json"
+      handle-as="json"
+      last-response="{{instrumentos}}"
+      loading="{{cargando}}"
+      
+    >
+    <!--     Si queremos que se cargue al presentar la pagina, habría que poner la propiedad "auto" de iron-ajax-->
+    </iron-ajax>
+
+    <paper-spinner active=[[cargando]]></paper-spinner>
+
+    <template is="dom-repeat" items="[[instrumentos]]">
+      <instrumento-musical 
+        nombre       ="[[item.nombre]]"
+        clasificacion="[[item.clasificacion]]"
+        descripcion  ="[[item.descripcion]]"
+        >
+
+      </instrumento-musical>
+    </template>
+
+    <button on-click="obtener">Recuperar instrumentos</button>
+ 
+  </template>
+
+  <script>
+    class ListadoInstrumentosAjax extends Polymer.Element {
+        static get is() {
+          return 'listado-instrumentos-ajax';
+        }
+        static get properties() {
+          return {
+            instrumentos: {
+              type: Array,
+              value: function() {
+                return [];
+              }
+            }
+          };
+
+        }
+        obtener() {
+          this.$.ajax.generateRequest();
+        }
+     }
+
+      window.customElements.define(ListadoInstrumentosAjax.is, ListadoInstrumentosAjax);
+  </script>
+
+</dom-module>

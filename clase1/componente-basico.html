@@ -1,0 +1,29 @@
+<link rel="import"  href="https://cdn.rawgit.com/download/polymer-cdn/2.6.0.2/lib/polymer/polymer.html">
+
+<dom-module id="componente-basico">
+
+  <template>
+
+    <style>
+      :host {
+        color: orange;
+        display: block;
+        margin: 150px;
+      }
+    </style>
+
+    <p>Admiróse um portugués, de ue los niños en Francia, desde su más tierna infancia, todos hablaran francés</p>
+  </template>
+
+  <script>
+    class ComponenteBasico extends Polymer.Element {
+        static get is() {
+          return 'componente-basico';
+        }
+    }
+
+    window.customElements.define(ComponenteBasico.is, ComponenteBasico);
+  </script>
+
+</dom-module>
+

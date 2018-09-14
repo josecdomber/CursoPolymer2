@@ -1,0 +1,66 @@
+<link rel="import"  href="../bower_components/polymer/polymer-element.html">
+<link rel="import"  href="../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import"  href="./instrumento-musical.html">
+
+<dom-module id="listado-instrumentos">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+  
+    </style>
+
+    <template is="dom-repeat" items="[[instrumentos]]">
+      <instrumento-musical 
+        nombre       ="[[item.nombre]]"
+        clasificacion="[[item.clasificacion]]"
+        descripcion  ="[[item.descripcion]]"
+        >
+
+      </instrumento-musical>
+    </template>
+ 
+  </template>
+
+  <script>
+    class ListadoInstrumentos extends Polymer.Element {
+        static get is() {
+          return 'listado-instrumentos';
+        }
+        static get properties() {
+          return {
+            instrumentos: {
+              type: Array,
+              value: function() {
+                return [
+                {
+                  nombre: 'Guitarra',
+                  clasificacion: 'cuerda',
+                  descripcion: 'caja con seis cuerdas'
+                },
+                {
+                  nombre: 'Tambor',
+                  clasificacion: 'percusión',
+                  descripcion: 'cajón con una tela tensada'
+                },                
+                {
+                  nombre: 'Piano',
+                  clasificacion: 'cuerda',
+                  descripcion: 'caja de resonancia con cuerdas atadas a teclas'
+                }
+
+
+                ];
+              }
+            }
+          }
+
+        }
+     }
+
+      window.customElements.define(ListadoInstrumentos.is, ListadoInstrumentos);
+  </script>
+
+</dom-module>

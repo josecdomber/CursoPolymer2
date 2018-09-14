@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Componente Polymer</title>
+
+  <!-- 
+ <link rel="import" href="https://polygit.org/components/polymer/polymer-element.html"> 
+
+-->
+
+    <script src="https://polygit.org/components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import"  href="https://polygit.org/components/polymer/polymer-element.html">
+
+    <style>
+    h1 {
+      background-color: orange;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Hola amigos</h1>
+  <componente-tonto></componente-tonto>
+  <componente-tonto></componente-tonto>
+
+
+  <template id="contenido">
+
+    <style>
+      h1 {
+        color: red;
+      }
+    </style>
+
+   <h1>Componente Polymer </h1>
+   <p>Admiróse um portugués, de ue los niños en Francia, desde su más tierna infancia, todos hablaran francés</p>
+  </template>
+
+  <script>
+    class ComponenteTonto extends Polymer.Element {
+        static get template() {
+          return document.getElemntById('contenido');
+        }
+    }
+
+    customElements.define('componente-tonto', ComponenteTonto);
+  </script>
+
+</body>
+</html>

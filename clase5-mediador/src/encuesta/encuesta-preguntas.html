@@ -1,0 +1,75 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./encuesta-opcion.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<dom-module id="encuesta-preguntas">
+  <template>
+    <style>
+      :host {
+        display: block;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode'
+      }
+
+
+    </style>
+
+    <template is="dom-repeat" items="[[cuestion.opciones]]" as="opcion">
+      <encuesta-opcion
+        respuesta="[[opcion]]"
+        id="[[index]]"
+        marcada="[[marcada]]"
+        on-opcion-marcada="registraOpcionMarcada"
+      ></encuesta-opcion>
+    </template>
+    
+  </template>
+
+   <script>
+    
+    class EncuestaPreguntas extends Polymer.Element {
+      static get is() { return 'encuesta-preguntas'; }
+
+      static get properties() {
+        return {
+          cuestion: Object,
+          marcada: {
+            type: Number,
+            value: null
+          }
+        };
+      }
+//recibe el objeto e (Event) ya que lo está invocanto el manejador de eventos desde encuesta-opcion
+       registraOpcionMarcada(e) { 
+          this.marcada = e.detail.id;
+       }
+
+// Cuando esté cargado el componente voy a asociarle eventos de teclado sobre el objeto window ya que en este caso el foco no está claro y el usuario puede pulsar sobre cualquier parte de la pantalla
+       ready() {
+        super.ready();
+// Si llamo al método sólo como this.marcarConTeclado, no va a llegarle el objeto this, esto se podría corregir con una arrow function, pero como no quiero una funcián anónima sino que debe ser identificada para poder referenciarla en el disconnectCallback, debo bindearle el this
+//        window.addEventListener('keypress', this.marcarConTeclado);
+        window.addEventListener('keypress', this.marcarConTeclado.bind(this));
+
+       }
+
+       marcarConTeclado(e) {
+         console.log(e);
+         let teclaNum = parseInt(e.key);
+         if (!isNaN(teclaNum) && teclaNum >= 1 && teclaNum < this.cuestion.opciones.length + 1) {
+           console.log('Voy a marcar', teclaNum);
+           this.marcada = teclaNum - 1 ;
+          }
+       }
+
+       // Vamos a controlar que cuando el usuario abandone la página, elimine la captura del evento keypress
+       disconnectedCallback() {
+        super.disconnectedCallback();
+        // Si sólo pongo keypreess como parámetro, va a desconectar todos los eventos de este tipo, por esto debo poner como segundo parámetro el nombre del método que quiero desconectar.
+        window.removeEventListener('keypress', this.marcarConTeclado);
+       }
+
+    }
+
+    window.customElements.define(EncuestaPreguntas.is, EncuestaPreguntas);
+  </script>
+</dom-module>
